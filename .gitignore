@@ -12,5 +12,6 @@ artifacts
 ##app files
 app/node_modules
 app/.env
+.env
 
 
