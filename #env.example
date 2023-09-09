@@ -1,3 +1,3 @@
 
-REACT_APP_ALCHEMY_SEPOLIA_API_KEY="your private alchemy private key"
-REACT_APP_SEPOLIA_PRIVATE_KEY="your accont private key"
+KLAYTN_BAOBAB_URL= "Your Baobab RPC link"
+PRIVATE_KEY= "your private key copied from MetaMask wallet"

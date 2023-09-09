@@ -1,8 +1,9 @@
 // src/contexts/Web3Context.tsx
-
+import { useToast } from "@chakra-ui/react";  
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import {ethers, ContractRunner} from 'ethers';
 const provider = new ethers.BrowserProvider(window.ethereum);
+
 
 
 declare global {
@@ -23,6 +24,8 @@ type Web3ContextProviderProps = {
 const Web3Context = createContext<Web3ContextProps>({ });
 
 const Web3Provider: React.FC<Web3ContextProviderProps> = ({ children }) => {
+  const toast = useToast();
+
   const [account, setAccount]=useState<string>()
   const [signer, setSigner]=useState<ethers.JsonRpcSigner>();
   const [_provider, setProvider]=useState<ethers.BrowserProvider|undefined>();  
@@ -30,6 +33,7 @@ const Web3Provider: React.FC<Web3ContextProviderProps> = ({ children }) => {
   
   // Function to handle the Metamask login
   const handleLogin = async () => {
+    if (window.ethereum) {
     setProvider(provider)
     try {
       // Request access to the user's MetaMask wallet
@@ -42,6 +46,16 @@ const Web3Provider: React.FC<Web3ContextProviderProps> = ({ children }) => {
     } catch (error) {
       console.error('Error connecting to Metamask:', error);
     }
+    }else{
+      console.warn('Ethereum provider not found. Please connect your wallet.');
+      toast({
+        title: "Error",
+        description: "Failed to connect to Metamask. Please try again.",
+        status: "error",
+        duration: 5000, // Duration in milliseconds
+        isClosable: true,
+      });
+    }
   };
 
   useEffect(() => {
@@ -49,7 +63,18 @@ const Web3Provider: React.FC<Web3ContextProviderProps> = ({ children }) => {
    handleLogin()
 
     // Add event listener to handle account changes
+    if (window.ethereum) {
     window.ethereum.on('accountsChanged', handleLogin);
+    }else{
+      console.warn('Ethereum provider not found. Please connect your wallet.');
+      toast({
+        title: "Error",
+        description: "Failed to connect to Metamask. Please try again.",
+        status: "error",
+        duration: 10000, // Duration in milliseconds
+        isClosable: true,
+      });
+    }
   }, [account]);
 
   return <Web3Context.Provider value={{ account,signer, _provider }}>{children}</Web3Context.Provider>;

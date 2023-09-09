@@ -16,6 +16,8 @@ import {
   useColorModeValue,
   Stack,
 } from '@chakra-ui/react';
+import { PlusSquareIcon , DragHandleIcon} from '@chakra-ui/icons';
+
 //import { Link } from "@reach/router";
 import { Link as ReachLink } from "react-router-dom"; 
 import { useWeb3 } from '../contexts/Web3Context';
@@ -27,20 +29,16 @@ import { ColorModeSwitcher } from "../components/utils/ColorModeSwitcher";
 
 
 const Links = [{
-        name:'Create Event',
+        name: 'Create Event',
         link:'/create-event'
-    },
-    {
-      name:'My Events',
-      link:'/my-events'
-    },
-    {
-        name:'Buy Ticket',
-        link:'/buy-ticket'
     },
     {
       name:'My Tickets',
       link:'/my-tickets'
+    },
+    {
+        name:'Buy Ticket',
+        link:'/buy-ticket'
     },
     {
       name:'Check Tickets',
@@ -84,9 +82,77 @@ export default  function Simple() {
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
+              {/* {Links.map((link) => (
                 <NavLink key={link.name} >{link}</NavLink>
-              ))}
+              ))} */}
+              <Menu>
+                <MenuButton
+                 
+                  rounded={'md'}
+                  px={2}
+                  py={1}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                  minW={0}>
+                  <DragHandleIcon/>&nbsp;  Events
+                </MenuButton>
+                <MenuList>
+                  <MenuItem as={ReachLink} to="/create-event">
+                    Create
+                  </MenuItem>
+                  <MenuItem as={ReachLink} to="/my-events">
+                    List
+                  </MenuItem>
+                  <MenuItem as={ReachLink} to="/sales">
+                    Your sales 
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+              <Menu>
+                <MenuButton
+                 
+                  rounded={'md'}
+                  px={2}
+                  py={1}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                  minW={0}>
+                  <DragHandleIcon/>&nbsp;  Tickets
+                </MenuButton>
+                <MenuList>
+                  <MenuItem as={ReachLink} to="/buy-ticket">
+                    Market
+                  </MenuItem>
+                  <MenuItem as={ReachLink} to="/my-tickets">
+                    Your Tickets 
+                  </MenuItem>
+                  
+                </MenuList>
+              </Menu>
+              
+              <Menu>
+                <MenuButton
+                 
+                  rounded={'md'}
+                  px={2}
+                  py={1}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                  minW={0}>
+                  <DragHandleIcon/>&nbsp;  Check Tickets
+                </MenuButton>
+                <MenuList>
+                  <MenuItem as={ReachLink} to="/check-tickets">
+                    Attendee
+                  </MenuItem>
+                </MenuList>
+              </Menu>
              
             </HStack>
           </HStack>
@@ -116,7 +182,7 @@ export default  function Simple() {
        
         
 
-        {isOpen ? (
+        {/* {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
@@ -124,7 +190,7 @@ export default  function Simple() {
               ))}
             </Stack>
           </Box>
-        ) : null}
+        ) : null} */}
       </Box>
     </>
   );

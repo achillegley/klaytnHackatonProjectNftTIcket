@@ -18,10 +18,12 @@ import {
     TagLabel,
     Image,
     AlertStatus,
-    Spinner
+    Spinner,
+    List, ListItem, ListIcon
   } from '@chakra-ui/react';
   import React , { FormEvent,useState, useEffect } from 'react';
   import { useControllableProp, useControllableState,Grid } from '@chakra-ui/react'
+  import { SearchIcon } from '@chakra-ui/icons';
   import DatePicker from 'react-datepicker';
   import 'react-datepicker/dist/react-datepicker.css';
   import EventTicket from '../Tickets/TicketForm';
@@ -31,7 +33,8 @@ import {
   import {ethers} from 'ethers';
   import { useWeb3 } from '../../contexts/Web3Context';
   import { deploy } from '../../scripts/deploy';
-  import {CustomAlert} from '../utils/Alert'
+  import {CustomAlert} from '../utils/Alert';
+  import axios from 'axios';
 
   
 
@@ -41,6 +44,11 @@ import {
     type: TicketType;
     places_limit: number;
     price:number;
+  }
+
+  interface AddressResult {
+    place_id: string;
+    display_name: string;
   }
 
   interface EventType{
@@ -65,7 +73,7 @@ import {
     const [displayCard, setDisplayCard] =useState<boolean>(false);
     const [contractAddress, setContractAddress]= useState<string|ethers.Addressable>('');
     const provider=ethers.JsonRpcProvider;
-    
+    const [addressResults, setAddressResults] = useState<AddressResult[]>([]);
     const signer=(useWeb3()).signer
     const account=(useWeb3()).account
     
@@ -79,6 +87,8 @@ import {
             { type: event.target.value as TicketType, places_limit: 0 ,price:0},
           ]
       );
+
+
        
     };
     const handleDateTimeChange = (date: Date) => {
@@ -118,6 +128,29 @@ import {
       setSelectedOptions(updatedOptions);
     };
 
+    const handlePlaceChange = async (event:React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      setPlace(value);
+  
+      if (value.length >= 3) {
+        try {
+          const response = await axios.get(
+            `https://nominatim.openstreetmap.org/search?q=${value}&format=json`
+          );
+  
+          setAddressResults(response.data);
+        } catch (error) {
+          console.error('Error fetching addresses:', error);
+        }
+      } else {
+        setAddressResults([]);
+      }
+    };
+
+    const handlePlaceSelect = (place: AddressResult) => {
+      setPlace(place.display_name);
+      setAddressResults([]);
+    };
     
     const hideAlert =()=>{
       setTimeout(()=>{
@@ -183,6 +216,8 @@ import {
       await deployContract()
       
     }
+
+    
     
     return (
       <>
@@ -232,7 +267,20 @@ import {
                     </FormControl>
                     <FormControl id="_place">
                       <FormLabel>Place</FormLabel>
-                      <Input type="text" value={place} onChange={(event)=>{setPlace(event.target.value)}}/>
+                      <Input type="text" value={place} onChange={handlePlaceChange}/>
+                      {addressResults.length > 0 && (
+                        <List mt={2}>
+                          {addressResults.map((result) => (
+                            <ListItem   onClick={() => handlePlaceSelect(result)}
+                            cursor="pointer"
+                            _hover={{ backgroundColor: 'gray.100' }}
+                            key={result?.place_id}>
+                              <ListIcon as={SearchIcon} color="green.500" />
+                              {result.display_name}
+                            </ListItem>
+                          ))}
+                        </List>
+                      )}
                     </FormControl>
                     <FormControl id="_types">
                       <Select value={selectedType} onChange={handleTypeChange}>
@@ -256,13 +304,12 @@ import {
                             }
                             onChange={handlePlacesLimitChange}
                           />
-                          
                         </FormControl>
                         <FormControl id="_price">
-                          <FormLabel>Price Eth</FormLabel>
+                          <FormLabel>Price Klay</FormLabel>
                             <Input
                             type="number"
-                            placeholder="Price Eth"
+                            placeholder="Price Klay"
                             value={
                               selectedOptions.find((option:TicketOption) => option.type === selectedType)
                                 ?.price ||0
@@ -302,13 +349,13 @@ import {
               
               </Stack>
             </Flex>
-            <Flex flex={1} h={'100%'}>
+            <Flex flex={1} >
             <VStack  align='stretch' >
             {displayCard &&(<Button onClick={handleValidateTicket}>Validate</Button>)}
             {displayCard && selectedOptions &&(
                 selectedOptions.map((option:TicketOption,index)=>(
                   option.places_limit>0 && option.price>0 &&(
-                      <EventTicket  price={option.price} key={index} id={'ticket-box-'+option.type} eventName={title} ticketType={option.type} placeLimit={option.places_limit} date={period} time={""} place={place} />
+                      <EventTicket _key={""} price={option.price} key={index} id={'ticket-box-'+option.type} eventName={title} ticketType={option.type} placeLimit={option.places_limit} date={period} contract_address={""} place={place} />
                   )
                 )) 
               )

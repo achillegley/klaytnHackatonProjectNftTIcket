@@ -8,14 +8,14 @@ import 'firebase/compat/database';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCzDqDDLT9QX51h0zIzlVe6ooNc2c8I1-U",
-  authDomain: "eventticketnft.firebaseapp.com",
-  databaseURL: "https://eventticketnft-default-rtdb.firebaseio.com",
-  projectId: "eventticketnft",
-  storageBucket: "eventticketnft.appspot.com",
-  messagingSenderId: "422518970048",
-  appId: "1:422518970048:web:d4955707cc33becf3e3f25",
-  measurementId: "G-4K1BV2N466"
+  apiKey: "AIzaSyBManuHdxpSapKYMOGjkc0FHOLOO3lgEuA",
+  authDomain: "eventnftticketklaytn.firebaseapp.com",
+  databaseURL: "https://eventnftticketklaytn-default-rtdb.firebaseio.com",
+  projectId: "eventnftticketklaytn",
+  storageBucket: "eventnftticketklaytn.appspot.com",
+  messagingSenderId: "1021410617606",
+  appId: "1:1021410617606:web:714f3e76e9a430101d9687",
+  measurementId: "G-FVWNRG822H"
 };
 
 // Initialize Firebase

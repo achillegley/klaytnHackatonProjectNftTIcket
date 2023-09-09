@@ -5,8 +5,8 @@ import '@nomicfoundation/hardhat-ethers'
 import '@nomicfoundation/hardhat-chai-matchers'
 require('dotenv').config();
 
-const alchemyApiKey = process.env.REACT_APP_ALCHEMY_SEPOLIA_API_KEY;
-const privateKey = process.env.REACT_APP_SEPOLIA_PRIVATE_KEY;
+const networkUrl = process.env.REACT_APP_KLAYTN_BAOBAB_URL;
+const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
 const config: HardhatUserConfig = {
   solidity: "0.8.19",
@@ -14,8 +14,9 @@ const config: HardhatUserConfig = {
     artifacts: "./app/src/artifacts"
   },
   networks:{
-    goerli:{
-      url:`https://eth-goerli.alchemyapi.io/v2/${alchemyApiKey}`,
+    klaytn:{
+      url:networkUrl,
+      gasPrice: 250000000000,
       accounts : [`0x${privateKey}`]
     }
   },

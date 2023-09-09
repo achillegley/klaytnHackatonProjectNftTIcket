@@ -1,7 +1,7 @@
-# CREATE TICKETS AS  FOR YOUR EVENT
+# CREATE TICKETS AS NFT  FOR YOUR EVENT
 
 This project is willing to help event organizers to create uniqueness NFT ticket for their Event with trustable checkng process. 
-This help avoid fraud and assure confidentiality of attendees. This project severs as my final project for alchmeny certification.
+This help avoid fraud and assure confidentiality of attendees. 
 
 ## The worflow
     #Event Creation
@@ -39,4 +39,4 @@ This help avoid fraud and assure confidentiality of attendees. This project seve
   
 ```
 ## About Me
-I'm full stack web( python, react typescript) devloper and blockchain enthusiast. 
+I'm full stack web( python, react typescript) developer and blockchain enthusiast. 

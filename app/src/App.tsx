@@ -21,8 +21,9 @@ import BuyTicket ,{DeployerTickets} from "./components/Tickets/TicketsList"
 import Simple from "./navigation/NavBar"
 import MyTickets from "./components/Tickets/OwnerTicketsList"
 import { CheckTicket } from "./components/Tickets/CheckTicket"
-
+import { CollapseEx } from "./components/utils/CollapseTable"
 import { Web3Provider } from './contexts/Web3Context';
+import { Sales } from "./components/Tickets/Sales"
 
 
 
@@ -39,6 +40,7 @@ export const App = () => (
           <Route path="/my-tickets" element={<MyTickets />}/>
           <Route path="/my-events" element={<DeployerTickets />}/>
           <Route path="/check-tickets" element={<CheckTicket />}/>
+          <Route path="/sales" element={<Sales />}/>
           <Route path="/" element={<CreateTicket/>} />
         </Routes>
       </Router>

@@ -1,4 +1,5 @@
 import { JsonRpcSigner, ethers } from "ethers";
+
 import EventTicketNft from '../artifacts/contracts/EventTicketNft.sol/EventTicketNft.json'
 import { EventTicketNft as types} from '../../../types/contracts/EventTicketNft'
 import { Alchemy,Network,GetBaseNftsForOwnerOptions } from "alchemy-sdk";
@@ -10,8 +11,10 @@ const config = {
   network: Network.ETH_SEPOLIA, // Replace with your network
 };
 
+//const caver = new Caver('https://api.baobab.klaytn.net:8651/');
+
 // Creates an Alchemy object instance with the config to use for making requests
-const alchemy = new Alchemy(config);
+//const alchemy = new Alchemy(config);
 
 export  const deploy=async(signer:JsonRpcSigner|undefined,_eventName:string, _eventSymbol:string , _types:string[],_prices:ethers.BigNumberish[], _places:number[])=>{
   try {
@@ -47,10 +50,21 @@ export const purchaseTicket=async (provider:ethers.BrowserProvider|undefined,uri
 
     // Wait for the transaction to be mined and get the receipt
     const receipt = await tx.wait();
-    return receipt
+    let result={status:0, tokenId:"" };
+    
+    if(receipt?.status==1)
+    {
+      console.log("the receipt: ", receipt)
+      //const event = receipt events.find((event) => event.event === "Transfer");
+      result.tokenId = receipt?.logs[0].topics[3];
+      result.status=receipt?.status;
+      //result.tokenId=await contract.totalSupply();
+    }
+   
+    return result
   
 
-    console.log('Transaction receipt:', receipt);
+    //console.log('Transaction receipt:', receipt);
   } catch (error) {
     console.error('Error sending transaction:', error);
   }
@@ -60,9 +74,10 @@ export const isDeployer= async (deployer_address:string, contract_address:string
   try {
     //Get Contract
     console.log("contract  address  ", contract_address)
-    let response = await alchemy.core.findContractDeployer(contract_address.toString());
-    console.log("the response ", response);
-    return response.deployerAddress===deployer_address
+    //let response = await alchemy.core.findContractDeployer(contract_address.toString());
+   // console.log("the response ", response);
+    //return response.deployerAddress===deployer_address
+    return true;
 
   } catch (error) {
     console.log("error calling isDeployer funciton", error)
@@ -70,38 +85,111 @@ export const isDeployer= async (deployer_address:string, contract_address:string
 }
 
 export const loadOwnerTickets= async (contract_address:string, provider:ethers.BrowserProvider|undefined) =>{
+  
   try {
-
-    
     const signer= await provider?.getSigner();
 
+     // Call the balanceOf function to get the number of NFTs owned by the address
+     let contract=await getContractInstance(contract_address,provider);  
+     let owner_address=signer?signer.address:'';
+
+    console.log("owner_address", owner_address.toLowerCase())
+
+    const transferFilter = contract.filters.Transfer(null,owner_address.toLowerCase(),null);
     
-    let contractAddresses=[]
-    contractAddresses.push(contract_address)
-    let owner=signer?signer.address:'';
-    const options: GetBaseNftsForOwnerOptions = {
-      contractAddresses: contractAddresses,
-      omitMetadata: false
-    };
-    let response = await alchemy.nft.getNftsForOwner(owner, options)
-    return response;
+    const transferEvents = await provider?.getLogs({
+      address: contract_address,
+      topics:  await transferFilter.getTopicFilter(),
+      fromBlock: 0,
+    });
+    const tokenUriFunction = contract.getFunction("tokenURI");
+    let tokenUris:string[]=[]
+   
+    
+    // Using map to create an array of promises
+    
+    let resolveds=  transferEvents?.map(async (event) => {
+      const tokenId = event.topics[3]; // The tokenId is the third topic
+      const tokenIdInt = tokenId.toString();
+      const tokenUri = await tokenUriFunction(tokenIdInt);
+      
+      return tokenUri;
+    });
+    
+  if (resolveds) {
+    tokenUris.push(...await Promise.all(resolveds));
+  }
+
+    return tokenUris
   } catch (error) {
     console.error('Error sending transaction:', error);
+    loadOwnerTickets(contract_address, provider)
+    
   } 
 }
 
 
-export const loadBuyerTickets= async (contract_address:string, owner_address:string) =>{
+
+export const loadBuyerTickets= async (provider:ethers.BrowserProvider|undefined, contract_address:string, owner_address:string, _token_id:string) =>{
   try {
-    let contractAddresses=[]
-    contractAddresses.push(ethers.getAddress(contract_address.toLowerCase()))
-    const options: GetBaseNftsForOwnerOptions = {
-      contractAddresses: contractAddresses,
-      omitMetadata: false
-    };
-    let response = await alchemy.nft.getNftsForOwner(ethers.getAddress(owner_address.toLowerCase()), options)
-    return response;
+
+    try {
+      const signer= await provider?.getSigner();
+  
+       // Call the balanceOf function to get the number of NFTs owned by the address
+       let contract=await getContractInstance(contract_address,provider);  
+       let deployer_address=signer?signer.address:'';
+  
+      //console.log("deployer_address", owner_address.toLowerCase())
+  
+      const transferFilter = contract.filters.Transfer(null,owner_address.toLowerCase(),null);
+      
+      const transferEvents = await provider?.getLogs({
+        address: contract_address,
+        topics:  await transferFilter.getTopicFilter(),
+        fromBlock: 0,
+      });
+      const tokenUriFunction = contract.getFunction("tokenURI");
+      let tokenUris:string[]=[]
+      //console.log("the transfer events ..... ", transferEvents)
+      
+      // Using map to create an array of promises
+      
+      let resolveds=  transferEvents?.map(async (event) => {
+        const tokenId = event.topics[3]; // The tokenId is the third topic
+        const tokenIdInt = tokenId.toString();
+        if(tokenId ==_token_id)
+        {
+          const tokenUri = await tokenUriFunction(tokenIdInt);
+          return tokenUri;
+        }
+        return null;
+        //console.log("token uri ", tokenUri)
+       
+      });
+      
+    if (resolveds) {
+      tokenUris.push(...await Promise.all(resolveds));
+    }
+      return tokenUris
+    } catch (error) {
+      console.error('Error sending transaction:', error);
+      loadBuyerTickets(provider,contract_address, owner_address,_token_id)
+      
+    }
+    // let contractAddresses=[]
+    // contractAddresses.push(ethers.getAddress(contract_address.toLowerCase()))
+    // const options: GetBaseNftsForOwnerOptions = {
+    //   contractAddresses: contractAddresses,
+    //   omitMetadata: false
+    // };
+    // let response = await alchemy.nft.getNftsForOwner(ethers.getAddress(owner_address.toLowerCase()), options)
+    
   } catch (error) {
     console.error('Error sending transaction:', error);
   } 
 }
+
+
+
+

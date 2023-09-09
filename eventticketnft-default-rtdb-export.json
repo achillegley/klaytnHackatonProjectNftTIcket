@@ -1,0 +1,199 @@
+{
+  "events": {
+    "-NaLUXPwczfce0JcXYaq": {
+      "contract_address": "0x1535F88cad3997F73bFB94b136f1827326d1034a",
+      "deployer": "0x804cf55c8bcb47b267145923c3d16b03651b813b",
+      "period": "Fri Sep 15 2023 19:45:00 GMT+0700 (Indochina Time)",
+      "place": "City Stadium",
+      "title": "Music Festival"
+    },
+    "-NaLVEyAbSDZMxsUO3Z2": {
+      "contract_address": "0x5d2C1FCF785EA09a419a4e5E7E7203423642F1Cf",
+      "deployer": "0x804cf55c8bcb47b267145923c3d16b03651b813b",
+      "period": "Fri Sep 15 2023 19:45:00 GMT+0700 (Indochina Time)",
+      "place": "Convention Center",
+      "title": "Tech Expo"
+    },
+    "-NaLbiofL8piP92aN_bF": {
+      "contract_address": "0xDf66F060bfF97E250cd71315b9dD2F225171aB6F",
+      "deployer": "0x804cf55c8bcb47b267145923c3d16b03651b813b",
+      "period": "Sun Oct 01 2023 09:00:00 GMT+0700 (Indochina Time)",
+      "place": "National Museum",
+      "title": "Art Exhibition"
+    },
+    "-NaQM0gaWpyclEKKW6YB": {
+      "contract_address": "0xB3f32fF42460d9740ee0C05AacD23B1a8fca9F9A",
+      "deployer": "0x804cf55c8bcb47b267145923c3d16b03651b813b",
+      "period": "Wed Nov 08 2023 18:30:00 GMT+0700 (Indochina Time)",
+      "place": "Garden Park",
+      "title": "Outdoor Movie Night"
+    },
+    "-NaQ_4DED1pO4OmjKmVV": {
+      "contract_address": "0x426233e6C0253f1D6e9b2d80d55772fAd6B11D44",
+      "deployer": "0x59a0ecc4dcf48ab54d24e038ef05fc68aac5486b",
+      "period": "Mon Dec 25 2023 12:00:00 GMT+0700 (Indochina Time)",
+      "place": "Downtown Square",
+      "title": "Christmas Carnival"
+    },
+    "-NaRFKgmyQMZo1C4IqbK": {
+      "contract_address": "0x5D49Ac4B3FaE36eC741aAc0A6c369e12C19B49Ef",
+      "deployer": "0x804cf55c8bcb47b267145923c3d16b03651b813b",
+      "period": "Sat Aug 05 2023 18:00:00 GMT+0700 (Indochina Time)",
+      "place": "Sports Complex",
+      "title": "Basketball Tournament"
+    },
+    "-NaRI3g26lgBiK1fwaZ2": {
+      "contract_address": "0x5d3870d5C365bf3E2012034F89C6EFAC3e74C9c6",
+      "deployer": "0x59a0ecc4dcf48ab54d24e038ef05fc68aac5486b",
+      "period": "Sat Jul 29 2023 11:45:00 GMT+0700 (Indochina Time)",
+      "place": "Botanical Garden",
+      "title": "Flower Festival"
+    }
+  },
+  "tickets": {
+    "-NaLUXTejV5BnzScBecm": {
+      "eventId": "-NaLUXPwczfce0JcXYaq",
+      "places_limit": 100,
+      "price": 0.0005,
+      "type": "GOLD"
+    },
+    "-NaLUXTgCkX6SkVBw2AR": {
+      "eventId": "-NaLUXPwczfce0JcXYaq",
+      "places_limit": 400,
+      "price": 0.0003,
+      "type": "SILVER"
+    },
+    "-NaLUXThJTEH7ZxeSHQ2": {
+      "eventId": "-NaLUXPwczfce0JcXYaq",
+      "places_limit": 1000,
+      "price": 0.0001,
+      "type": "DEFAULT"
+    },
+    "-NaLVF1kCgi7q_N21IDi": {
+      "eventId": "-NaLVEyAbSDZMxsUO3Z2",
+      "places_limit": 10,
+      "price": 0.0003,
+      "type": "GOLD"
+    },
+    "-NaLVF1m4ogJ0N70V-Ks": {
+      "eventId": "-NaLVEyAbSDZMxsUO3Z2",
+      "places_limit": 20,
+      "price": 0.0002,
+      "type": "SILVER"
+    },
+    "-NaLVF1ovhiWhdQBbqWH": {
+      "eventId": "-NaLVEyAbSDZMxsUO3Z2",
+      "places_limit": 50,
+      "price": 0.0001,
+      "type": "DEFAULT"
+    },
+    "-NaLbiseWZXNnUwpN94R": {
+      "eventId": "-NaLbiofL8piP92aN_bF",
+      "places_limit": 10,
+      "price": 0.03,
+      "type": "GOLD"
+    },
+    "-NaLbisgM8TqtE6g6QV3": {
+      "eventId": "-NaLbiofL8piP92aN_bF",
+      "places_limit": 15,
+      "price": 0.02,
+      "type": "SILVER"
+    },
+    "-NaLbishmKaiFPPUS2OM": {
+      "eventId": "-NaLbiofL8piP92aN_bF",
+      "places_limit": 20,
+      "price": 0.001,
+      "type": "DEFAULT"
+    },
+    "-NaQM0rEmcnrKuhvktyQ": {
+      "eventId": "-NaQM0gaWpyclEKKW6YB",
+      "places_limit": 10,
+      "price": 0.0002,
+      "type": "SILVER"
+    },
+    "-NaQM0rFBaYViT9MKbcO": {
+      "eventId": "-NaQM0gaWpyclEKKW6YB",
+      "places_limit": 5,
+      "price": 0.0004,
+      "type": "GOLD"
+    },
+    "-NaQM0rH0-ujrl05GgHv": {
+      "eventId": "-NaQM0gaWpyclEKKW6YB",
+      "places_limit": 50,
+      "price": 0.0001,
+      "type": "DEFAULT"
+    },
+    "-NaQ_4GkDQ3yqntwFOw2": {
+      "eventId": "-NaQ_4DED1pO4OmjKmVV",
+      "places_limit": 20,
+      "price": 0.0005,
+      "type": "GOLD"
+    },
+    "-NaQ_4GlpRYtB4JXBL0T": {
+      "eventId": "-NaQ_4DED1pO4OmjKmVV",
+      "places_limit": 40,
+      "price": 0.0003,
+      "type": "SILVER"
+    },
+    "-NaQ_4GnHfymNnZ4nJOb": {
+      "eventId": "-NaQ_4DED1pO4OmjKmVV",
+      "places_limit": 50,
+      "price": 2,
+      "type": "DEFAULT"
+    },
+    "-NaRFKjrdj2aJnCWscIp": {
+      "eventId": "-NaRFKgmyQMZo1C4IqbK",
+      "places_limit": 5,
+      "price": 0.0004,
+      "type": "GOLD"
+    },
+    "-NaRFKjsjelfpWbOChQ5": {
+      "eventId": "-NaRFKgmyQMZo1C4IqbK",
+      "places_limit": 20,
+      "price": 0.0002,
+      "type": "SILVER"
+    },
+    "-NaRFKjti_bhXVyiFtRY": {
+      "eventId": "-NaRFKgmyQMZo1C4IqbK",
+      "places_limit": 50,
+      "price": 0.0001,
+      "type": "DEFAULT"
+    },
+    "-NaRI3j6GmPtlzruIPRe": {
+      "eventId": "-NaRI3g26lgBiK1fwaZ2",
+      "places_limit": 20,
+      "price": 0.0002,
+      "type": "SILVER"
+    },
+    "-NaRI3j6GmPtlzruIPRf": {
+      "eventId": "-NaRI3g26lgBiK1fwaZ2",
+      "places_limit": 5,
+      "price": 0.0003,
+      "type": "GOLD"
+    },
+    "-NaRI3j7Gt4dcz_y2I75": {
+      "eventId": "-NaRI3g26lgBiK1fwaZ2",
+      "places_limit": 30,
+      "price": 0.0001,
+      "type": "DEFAULT"
+    }
+  },
+  "ticketsOwners": {
+    "-NaLc9ENG7n1Pet-kTrg": {
+      "contract_address": "0x5d2C1FCF785EA09a419a4e5E7E7203423642F1Cf",
+      "owner_adress": "0x59a0ecc4dcf48ab54d24e038ef05fc68aac5486b"
+    },
+    "-NaQMIhvOHuiFDnRbKUH": {
+      "contract_address": "0xB3f32fF42460d9740ee0C05AacD23B1a8fca9F9A",
+      "owner_adress": "0x59a0ecc4dcf48ab54d24e038ef05fc68aac5486b"
+    },
+    "-NaRFZb0PPS2nsvOySGO": {
+      "contract_address": "0x426233e6C0253f1D6e9b2d80d55772fAd6B11D44",
+      "owner_adress": "0x804cf55c8bcb47b267145923c3d16b03651b813b"
+    },
+    "-NaRHUImuGdJ_C39KFCm": {
+      "contract_address": "0x5D49Ac4B3FaE36eC741aAc0A6c369e12C19B49Ef",
+      "owner_adress": "0x59a0ecc4dcf48ab54d24e038ef05fc68aac5486b"
+    }
+  }
+}
