@@ -22,12 +22,7 @@ export default function EventTicket({ id, eventName, ticketType, placeLimit, dat
   const ticketRef = useRef<HTMLElement>(null);
   
  const qrString= JSON.stringify(
-       {'title':eventName, 
-       'type': ticketType, 
-       'date': date, 
-       'contract': contract_address,
-       'place':place, 
-       'buyer':owner,
+       {
        '_key':_key
       }
      )

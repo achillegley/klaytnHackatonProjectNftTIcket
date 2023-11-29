@@ -13,5 +13,7 @@ artifacts
 app/node_modules
 app/.env
 .env
+app/src/components/Tickets/oldCheckTicket.tsx
+app/src/components/Tickets/oldTicketForm.tsx
 
 

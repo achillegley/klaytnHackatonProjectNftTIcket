@@ -123,7 +123,7 @@ export const loadOwnerTickets= async (contract_address:string, provider:ethers.B
     return tokenUris
   } catch (error) {
     console.error('Error sending transaction:', error);
-    loadOwnerTickets(contract_address, provider)
+    //loadOwnerTickets(contract_address, provider)
     
   } 
 }

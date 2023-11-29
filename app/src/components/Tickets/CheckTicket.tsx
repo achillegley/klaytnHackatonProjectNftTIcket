@@ -214,21 +214,32 @@ export  function CheckTicket() {
       setCameraActive(false);
     }
   };
+
+  const _findTicketInfos=async()=>{
+
+  }
   
   const  _loadUris=async()=>{
+    //console.log("load uris called ")
+    console.log("load uris called==== ", ticketKey)
     {setUris([])}
     if(!scannerActive)
     {
+      
       setDisplaySpinner(true);
       const _uris: string[]=[]
       try {
-        if(eventContract && ownerAddress && ticketKey){
+        
+        if( ticketKey){
+          console.log("load uris called ")
           let ticketOwners:{val:TicketOwner,key:string}[]=[{val:{contract_address:"",owner_adress:"",token_id:"", ticket_key:"", ticket_id:""},key:""}]
           ticketOwners= await readAllTicketOwners();
           const _ticketsOwners: typeof ticketOwners=[];
           await Promise.all(ticketOwners.map((ticketOwner)=>{
-            if(ticketOwner.val.owner_adress.toLowerCase()===ownerAddress.toLowerCase() && ticketOwner.val.contract_address.toLowerCase()===eventContract.toLowerCase() && ticketOwner.val.ticket_key ==ticketKey)
+            if( ticketOwner.val.ticket_key ==ticketKey)
             {
+              setOwnerAddress(ticketOwner.val.owner_adress)
+              setEventContract(ticketOwner.val.contract_address)
               console.log("finded ", ticketOwner);
               _ticketsOwners.push(ticketOwner)
               //return ticketOwner
@@ -239,21 +250,19 @@ export  function CheckTicket() {
           
           if(_ticketsOwners)
           {
+            const _ownerAddress= _ticketsOwners[0].val.owner_adress
+            const _eventContract= _ticketsOwners[0].val.contract_address
             if( _ticketsOwners[0].val.contract_address.length>5){
 
             
             setTickeOwner(_ticketsOwners[0]);
-            const currentUris= await loadBuyerTickets(_provider,eventContract, ownerAddress, _ticketsOwners[0]?.val?.token_id.toString())
-            setEventContract('null');
-            setOwnerAddress('null');
-            const contractElement=document.getElementById("contract_")as HTMLInputElement;
-            if(contractElement){
-              contractElement.value='';
-            }
-            const buyerElement=document.getElementById("buyer_")as HTMLInputElement;
-            if(buyerElement){
-              buyerElement.value='';
-            }
+            const currentUris= await loadBuyerTickets(_provider,_eventContract, _ownerAddress, _ticketsOwners[0]?.val?.token_id.toString())
+            // setEventContract('null');
+            // setOwnerAddress('null');
+            // const contractElement=document.getElementById("contract_")as HTMLInputElement;
+            // if(contractElement){
+            //   contractElement.value='';
+            // }
             //setUris([]);
             //console.log("the event contract ", eventContract.toString());
             //console.log("the owner address ", ownerAddress.toString());
@@ -346,18 +355,17 @@ export  function CheckTicket() {
                       //handleScan(result);
                       //console.log("the result ==== ", result)
                       try {
-                        var resultText={contract:"",buyer:"",_key:""};
+                        var resultText={_key:""};
                         resultText=JSON.parse((result.getText()).toString())
                         console.log("the scan result ", resultText);
-                        if(resultText.contract.length>5 && resultText.buyer.length>5 ){
-                          
-                          setEventContract(resultText?.contract.toString().toLowerCase());
-                          setOwnerAddress(resultText?.buyer.toString().toLowerCase());
+                        if(resultText._key.length>5  ){
+                      
                           setTicketKey(resultText?._key)
                           setTimeout(()=>{
                             setScannerActive(false);
                             checkCameraAccess();
                           },2000)
+                          
                           
                           
                         }
@@ -393,16 +401,13 @@ export  function CheckTicket() {
                     scan 
                   </Button>
                 )}
-                {eventContract.length>5 && ownerAddress.length>5 && !scannerActive && (
+                {ticketKey.length>5 && !scannerActive && (
                   <>
-                  <FormControl id="_event_contract">
-                  <FormLabel>Event Contract</FormLabel>
-                    <Input type="text" value={eventContract} id='contract_' onChange={(event)=>{setEventContract(event.target.value)}} readOnly/>
+                  <FormControl id="_ticket_key">
+                  <FormLabel>Ticket Key</FormLabel>
+                    <Input type="text" value={ticketKey} id='ticket_key_' onChange={(event)=>{setTicketKey(event.target.value)}} readOnly/>
                   </FormControl>
-                  <FormControl id="_owner_address">
-                    <FormLabel>Buyer Address</FormLabel>
-                    <Input type="text" value={ownerAddress} id='buyer_' onChange={(event)=>{setOwnerAddress(event.target.value)}} readOnly/>
-                  </FormControl>
+                  
                   <Button
                       bg={'red.400'}
                       color={'white'}
